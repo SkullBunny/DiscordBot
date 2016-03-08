@@ -1,8 +1,10 @@
 import discord
 import asyncio
 import config
+import userhelper
 
 client = discord.Client()
+uh = userhelper.userhelper(client)
 
 @client.event
 async def on_ready():
@@ -24,5 +26,12 @@ async def on_message(message):
     elif message.content.startswith('!sleep'):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
+    elif message.content.startswith('!poop'):
+        await client.send_message(message.channel, 'Pooping...')
+    elif message.content.startswith('!bruce'):
+        member = uh.getUser("roxas")
+        for channel in client.get_all_channels():
+            if channel.name == "afk":
+                await client.move_member(member, channel)
 
 client.run(config.USERNAME, config.PASSWORD)
